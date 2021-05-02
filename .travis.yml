@@ -1,0 +1,25 @@
+# Config file for automatic testing at travis-ci.org
+language: python
+python:
+  - 3.8
+
+if: branch = master
+
+install:
+  - pipenv install --dev --ignore-pipfile --deploy
+
+before_script: # code coverage tool
+   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+   - chmod +x ./cc-test-reporter
+   - ./cc-test-reporter before-build
+script:
+  - pytest --cov-report xml --cov-report term
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
+deploy:
+  skip_cleanup: true
+  on:
+    branch: master
+  provider: script
+  script: pipenv run python -m final_project
