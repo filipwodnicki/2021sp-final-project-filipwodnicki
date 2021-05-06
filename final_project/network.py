@@ -4,27 +4,34 @@ network.py
 The Project class lives here.
 """
 
+from contextlib import contextmanager
 import networkx as nx
 
 
 class Network:
-    nodes = None  # descriptor
-    edges = None  # descriptor
-
     def __init__(self, G: nx.Graph):
         self.G = G
-        # run checks on the network
 
-    def nodes_descriptor(self):
-        pass
+    @property  # Advanced Python
+    def nodes(self):
+        return self.G.nodes
 
-    def edges_descriptor(self):
-        pass
+    @property
+    def edges(self):
+        return self.G.edges
+
+    @contextmanager
+    def open_as_edges_df(self, nx_graph_constructor=nx.MultiDiGraph):
+        try:
+            df = nx.convert_matrix.to_pandas_edgelist(self.G)
+            yield df
+        finally:
+            print(f"Overwriting {self.G}")
+            self.G = nx.convert_matrix.from_pandas_edgelist(
+                df, edge_attr=True, create_using=nx_graph_constructor
+            )
 
     def _do_something_on_nodes(self, function):
-        pass
-
-    def _do_something_on_edges(self, function):
         pass
 
     def _get_node_nearest_point(self, point):
