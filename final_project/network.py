@@ -6,9 +6,14 @@ The Project class lives here.
 
 from contextlib import contextmanager
 import networkx as nx
+from cartography import CartographyMixin
+from routing import RoutingMixin
 
 
-class Network:
+class Network(CartographyMixin, RoutingMixin):
+
+    # parameter... what is that thing called?
+
     def __init__(self, G: nx.Graph):
         self.G = G
 
@@ -19,6 +24,11 @@ class Network:
     @property
     def edges(self):
         return self.G.edges
+
+    @property
+    def extent(self):
+        # TODO Polygon geographic extent
+        raise NotImplementedError
 
     @contextmanager
     def open_as_edges_df(self, nx_graph_constructor=nx.MultiDiGraph):
@@ -37,22 +47,26 @@ class Network:
     def _get_node_nearest_point(self, point):
         pass
 
-    def get_shortest_route(self, A, B, k=1):
-        """
-
-        :param A:
-        :type A:
-        :param B:
-        :type B:
-        :param k: number of nearest nodes to each A and B to consider
-        :type k:
-        :return:
-        :rtype:
-        """
+    def _add_nodes(self):
         pass
 
 
-class CombinedNetwork(Network):
+class TransitNetwork(Network):
+    def __init__(self, gtfs_zip):
+        self.G = ""  # initialize from GTFS via peartree
+
+
+class WalkNetwork(Network):
+    def __init__(self):
+        # Enforce a schema, where nodes have type walking and length seconds
+        pass  # double constructor. From graphml file, and from polygon
+
+    def save(self):  # To file
+        raise NotImplementedError
+
+
+class MultiNetwork(Network):
     def __init__(self, G1, G2):
         # Run checks to combine networks
-        pass
+        # _add_nodes()
+        raise NotImplementedError
