@@ -1,12 +1,14 @@
 import peartree as pt
 import networkx
 import geopandas as gpd
+import osmnx as ox
 from shapely.geometry import Point
 from networkx.readwrite import write_gpickle, read_gpickle
 
-from utilities import nearest_k_nodes
-from viz import create_polygon_map, create_fancy_graph_map
-import merge
+from .utilities import nearest_k_nodes
+from .viz import create_polygon_map, create_fancy_graph_map
+from . import merge
+
 
 NOLA_GTFS_ZIP = "data/nola_gtfs.zip"
 NOLA_TRANSIT_PICKLE = "data/nola_transit_network.pickle"
@@ -53,34 +55,31 @@ def main():
     # print(n.nodes[:10])
 
 
+def load_osmnx_graph(filepath):
+    graph = ox.io.load_graphml(filepath)
+    return graph
+
+
+def load_peartree_graph(filepath):
+    graph = read_gpickle(filepath)
+    return graph
+
+
+def make_nodes_df_from_pg(peartree_graph):
+    return ox.utils_graph.graph_to_gdfs(peartree_graph, edges=False, node_geometry=True)
+
+
 if __name__ == "__main__":
-    # main()
-    # PG = read_gpickle(NOLA_TRANSIT_PICKLE)
+    OG = load_osmnx_graph(filepath=NOLA_WALKING_PICKLE)
+    PG = load_peartree_graph(filepath=NOLA_TRANSIT_PICKLE)
 
-    print("Getting the walking graph")
-    merge.combine(NOLA_WALKING_PICKLE, NOLA_GTFS_ZIP, COMBINED_GRAPH_PICKLE)
-    # G = read_gpickle(COMBINED_GRAPH_PICKLE)
+    pg_nodes = make_nodes_df_from_pg(PG)
 
-    # print("Making a map")
-    # boundary = get_boundary_of_graph(G)
-    # create_polygon_map(polygon=boundary, outfile=NOLA_MAP)
+    xarr = pg_nodes["x"].to_numpy()
+    yarr = pg_nodes["y"].to_numpy()
 
-    pt1 = (29.922279216104823, -90.11460261754031)
-    pt2 = (29.921460143478885, -90.09538679522964)
-
-    # print("Making a fancy map")
-    # nodes = nearest_k_nodes(G, pt1[1], pt1[0], k=350)
-    # m = create_fancy_graph_map(
-    #     graph=G.subgraph(nodes),
-    #     outfile="data/nola_subgraph_map_5.html",
-    #     edge_attr="mode",
-    #     color_scheme={"transit": "red", "walk": "blue"},
-    # )
-    #
-    # import matplotlib.pyplot as plt
-    #
-    # networkx.draw(G.subgraph(nodes))
-    # plt.draw()  # pyplot draw()
-    # plt.show()
+    nodes, dist = nearest_k_nodes(OG, X=xarr[0:10], Y=yarr[0:10], k=1, return_dist=True)
+    print("nodes", nodes)
+    print("dist", dist)
 
     print("stop")

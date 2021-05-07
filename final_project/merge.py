@@ -84,7 +84,9 @@ def combine(NOLA_WALKING_PICKLE, NOLA_GTFS_ZIP, COMBINED_GRAPH_PICKLE):
     end = 9 * 60 * 60
     # Note this will be a little slow - an optimization here would be
     # to have coalesced the walk network
-    G2 = pt.load_feed_as_graph(feed, start, end, existing_graph=Gwalk_adj)
+    G2 = pt.load_feed_as_graph(
+        feed, start, end, existing_graph=Gwalk_adj, impute_walk_transfers=True
+    )
     G = cleanup_graph(G2)
     # ----- END COMBINE BLOCK -----
 

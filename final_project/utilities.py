@@ -85,7 +85,8 @@ def nearest_k_nodes(G, X, Y, k=1, return_dist=False):
         # haversine requires lat, lng coords in radians
         nodes_rad = numpy.deg2rad(nodes[["y", "x"]])
         points_rad = numpy.deg2rad(numpy.array([Y, X]).T)
-        [dist], [pos] = BallTree(nodes_rad, metric="haversine").query(points_rad, k=k)
+        tree = BallTree(nodes_rad, metric="haversine")
+        (dist, pos) = tree.query(points_rad, k=k)
         dist = dist * EARTH_RADIUS_M  # convert radians -> meters
         nn = nodes.index[pos]
 
@@ -113,10 +114,10 @@ def get_route_length(graph, route):
 
 def get_shortest_pair(graph, origin, dest, k=3):
 
-    nearest_to_a, _ = nearest_k_nodes(
+    [nearest_to_a], _ = nearest_k_nodes(
         graph, origin[1], origin[0], k=k, return_dist=True
     )
-    nearest_to_b, _ = nearest_k_nodes(graph, dest[1], dest[0], k=k, return_dist=True)
+    [nearest_to_b], _ = nearest_k_nodes(graph, dest[1], dest[0], k=k, return_dist=True)
 
     shortest_dist = 1000000000000
     shortest_route = None
