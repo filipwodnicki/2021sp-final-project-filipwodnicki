@@ -7,8 +7,7 @@ from networkx.readwrite import write_gpickle, read_gpickle
 
 from .utilities import nearest_k_nodes
 from .viz import create_polygon_map, create_fancy_graph_map
-from . import merge
-
+from .merge import merge
 
 NOLA_GTFS_ZIP = "data/nola_gtfs.zip"
 NOLA_TRANSIT_PICKLE = "data/nola_transit_network.pickle"
@@ -30,20 +29,6 @@ def peartree_helper(gtfs_feed_zip) -> networkx.Graph:
 # New Orleans GTFS data, which we can pull from the peartree
 # network graph by utilizing coordinate values and extracting
 # a convex hull from the point cloud
-
-
-def get_boundary_of_graph(G):
-    """
-    Function attributable to code in:
-    http://kuanbutts.com/2018/12/24/peartree-with-walk-network/
-
-    :param G: Graph network
-    :return: Shapely Polygon 
-    """
-    boundary = gpd.GeoSeries(
-        [Point(n["x"], n["y"]) for i, n in G.nodes(data=True)]
-    ).unary_union.convex_hull
-    return boundary
 
 
 def main():
