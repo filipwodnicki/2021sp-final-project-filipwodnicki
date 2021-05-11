@@ -17,7 +17,11 @@ def abc():
 maxdepth: 2
 caption: Contents
 ---
-A test page <test>
+Install instruction <install>
+Usage <usage>
+Code reference <reference>
+Advanced Python Concepts <adv_py>
+Next steps <future>
 ```
 
 ```{eval-rst}

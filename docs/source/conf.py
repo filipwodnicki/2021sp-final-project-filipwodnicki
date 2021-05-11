@@ -10,9 +10,12 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
+import os
+import sys
+
+sys.path.insert(
+    0, os.path.abspath("../..")
+)  # Tells sphinx that project root is in ./docs
 
 import sphinx_rtd_theme
 
@@ -31,10 +34,16 @@ release = "0.1.0"
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["myst_parser", "sphinx_rtd_theme"]
+extensions = [
+    "myst_parser",
+    "sphinx_rtd_theme",
+    "sphinx.ext.autodoc",
+    "sphinx.ext.napoleon",
+]
+# sphinx.ext.ov
 
 # The suffix of source filenames.
-source_suffix = [".md", ".rst"]
+source_suffix = [".md"]
 
 # source_parsers = {".md": "sphinxcontrib.markdown.MarkdownParser"}
 
