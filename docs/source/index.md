@@ -63,11 +63,15 @@ See the [Code Reference](./reference.md) and [repo](https://github.com/filipwodn
 See [Demo.ipynb](./Demo.ipynb) where we walk through combining a the walking and transit networks of New Orleans.  
 
 ### Basic Usage
+```shell
+make data
+```
+
 ```python
 from final_project import WalkingNetwork, TransitNetwork, MultiNetwork
 
-W = WalkNetwork.load(NOLA_WALK)
-T = TransitNetwork.load(NOLA_TRANSIT)
+W = WalkNetwork.create_from_name("Boston")
+T = TransitNetwork.create_from_gtfs("data/MBTA_GTFS.zip")
 WT = MultiNetwork.combine(walk=W, transit=T)
 
 m = WT.mapper
