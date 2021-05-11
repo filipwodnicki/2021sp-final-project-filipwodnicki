@@ -1,6 +1,31 @@
 # Final Project
 
-Add any badges to your ***published documentation*** up here!
+[![Documentation Status](https://readthedocs.org/projects/2021sp-final-project-filipwodnicki/badge/?version=latest)](https://2021sp-final-project-filipwodnicki.readthedocs.io/en/latest/?badge=latest)
+
+"Transit + OSMnx"  
+by Filip Wodnicki
+
+*Final project submission for:*
+
+Harvard Extension School  
+Advanced Python for Data Science (CSCI E-29)   
+Spring 2021
+
+
+### Bottom line: Networks and multimodal routing!
+
+Google Maps                       |  Transit + OSMnx
+:--------------------------------:|:-------------------------------------:
+![Google Maps](./img/google_maps.png)  |  ![Transit + OSMnx](./img/transit_osmnx_demo.png)
+
+On the left are these google map directions, on the right are the same multi-modal transit directions built with transit + osmnx.
+
+### Project Links
+* [Project documentation](https://2021sp-final-project-filipwodnicki.readthedocs.io/)  
+* [Presentation slides](https://docs.google.com/presentation/d/1L0vrLfTB2FN6hQcsGmyvXr8JFdBoLr_LngKreDsC7mY/edit?usp=sharing)  
+* [Presentation video](https://imhere.dcex.harvard.edu/courses/81475) (Section 5 May 2021, 1:30PM EST)  *Harvard Extension access only*
+* [Piazza post](https://piazza.com/class/kjnsrz2yddr2si?cid=762)  *Harvard Extension access only*
+
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
