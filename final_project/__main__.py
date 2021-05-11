@@ -1,13 +1,8 @@
 import peartree as pt
 import networkx
-import geopandas as gpd
 import osmnx as ox
-from shapely.geometry import Point
 from networkx.readwrite import write_gpickle, read_gpickle
 
-from .utilities import nearest_k_nodes
-from .viz import create_polygon_map, create_fancy_graph_map
-from .merge import merge
 
 NOLA_GTFS_ZIP = "data/nola_gtfs.zip"
 NOLA_TRANSIT_PICKLE = "data/nola_transit_network.pickle"
@@ -55,16 +50,4 @@ def make_nodes_df_from_pg(peartree_graph):
 
 
 if __name__ == "__main__":
-    OG = load_osmnx_graph(filepath=NOLA_WALKING_PICKLE)
-    PG = load_peartree_graph(filepath=NOLA_TRANSIT_PICKLE)
-
-    pg_nodes = make_nodes_df_from_pg(PG)
-
-    xarr = pg_nodes["x"].to_numpy()
-    yarr = pg_nodes["y"].to_numpy()
-
-    nodes, dist = nearest_k_nodes(OG, X=xarr[0:10], Y=yarr[0:10], k=1, return_dist=True)
-    print("nodes", nodes)
-    print("dist", dist)
-
-    print("stop")
+    main()
