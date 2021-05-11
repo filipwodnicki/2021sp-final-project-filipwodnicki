@@ -16,7 +16,7 @@ Spring 2021
 
 Google Maps                       |  Transit + OSMnx
 :--------------------------------:|:-------------------------------------:
-![Google Maps](./img/google_maps.png)  |  ![Transit + OSMnx](./img/transit_osmnx_demo.png)
+![Google Maps](docs/source/img/google_maps.png)  |  ![Transit + OSMnx](docs/source/img//transit_osmnx_demo.png)
 
 On the left are these google map directions, on the right are the same multi-modal transit directions built with transit + osmnx.
 
@@ -25,6 +25,8 @@ On the left are these google map directions, on the right are the same multi-mod
 * [Presentation slides](https://docs.google.com/presentation/d/1L0vrLfTB2FN6hQcsGmyvXr8JFdBoLr_LngKreDsC7mY/edit?usp=sharing)  
 * [Presentation video](https://imhere.dcex.harvard.edu/courses/81475) (Section 5 May 2021, 1:30PM EST)  *Harvard Extension access only*
 * [Piazza post](https://piazza.com/class/kjnsrz2yddr2si?cid=762)  *Harvard Extension access only*
+
+Please see [Project docs](https://2021sp-final-project-filipwodnicki.readthedocs.io/) for more info!  
 
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
