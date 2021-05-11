@@ -3,7 +3,7 @@ import osmnx as ox
 import peartree as pt
 
 
-def convert_length_to_meter(osmnx_graph):
+def convert_length_to_meter(Gwalk_adj):
     """
     from http://kuanbutts.com/2018/12/24/peartree-with-walk-network/
 
@@ -13,9 +13,6 @@ def convert_length_to_meter(osmnx_graph):
     :rtype:
     """
     walk_speed = 4.5  # about 3 miles per hour
-
-    # Make a copy of the graph in case we make a mistake
-    Gwalk_adj = osmnx_graph.copy()
 
     # Iterate through and convert lengths to seconds
     for from_node, to_node, edge in Gwalk_adj.edges(data=True):
