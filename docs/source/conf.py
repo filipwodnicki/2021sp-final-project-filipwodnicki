@@ -35,17 +35,20 @@ release = "0.1.0"
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "myst_parser",
     "sphinx_rtd_theme",
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
+    "myst_nb",
 ]
-# sphinx.ext.ov
 
-# The suffix of source filenames.
-source_suffix = [".md"]
 
-# source_parsers = {".md": "sphinxcontrib.markdown.MarkdownParser"}
+source_suffix = {
+    ".rst": "restructuredtext",
+    ".md": "myst-nb",
+    ".ipynb": "myst-nb",
+    ".myst": "myst-nb",
+}
+
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -67,3 +70,7 @@ html_theme = "sphinx_rtd_theme"
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
+
+
+# -- Options for myst_nb -------------------------------------------------
+jupyter_execute_notebooks = "off"
