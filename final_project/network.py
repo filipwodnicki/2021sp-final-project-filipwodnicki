@@ -16,7 +16,6 @@ from networkx.readwrite import write_gpickle, read_gpickle
 
 from .cartography import NetworkMapper
 from .routing import RoutingMixin
-from .utilities import nearest_k_nodes
 from .merge import convert_length_to_meter
 
 
@@ -155,7 +154,7 @@ class MultiNetwork(TransitNetwork):
         xarr = transit_nodes["x"].to_numpy()
         yarr = transit_nodes["y"].to_numpy()
 
-        nodes, dist = nearest_k_nodes(walk.G, X=xarr, Y=yarr, k=1, return_dist=True)
+        nodes, dist = walk.nearest_k_nodes(X=xarr, Y=yarr, k=1, return_dist=True)
         nodes_flat = np.array(nodes).reshape(len(nodes))
         dist_flat = np.array(dist).reshape(len(dist))
 
