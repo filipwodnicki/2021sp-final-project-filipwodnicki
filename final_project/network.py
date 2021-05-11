@@ -12,6 +12,7 @@ import pandas as pd
 import osmnx as ox
 import networkx as nx
 import numpy as np
+import peartree as pt
 from networkx.readwrite import write_gpickle, read_gpickle
 
 from .cartography import NetworkMapper
@@ -108,9 +109,21 @@ class TransitNetwork(Network):
         # TODO Enforce schema
 
     @classmethod
+    def create_from_gtfs(cls, gtfs_feed_zip):
+        feed = pt.get_representative_feed(gtfs_feed_zip)
+        start = 7 * 60 * 60
+        end = 9 * 60 * 60
+        graph = pt.load_feed_as_graph(feed, start, end)
+        return cls(graph)
+
+    @classmethod
     def load(cls, filepath):
         graph = read_gpickle(filepath)
         return cls(graph)
+
+    def save(self, fname):
+        """fname must be .pickle extension"""
+        write_gpickle(self.G, fname)
 
 
 class WalkNetwork(Network):
@@ -128,8 +141,13 @@ class WalkNetwork(Network):
         graph = ox.io.load_graphml(filepath)
         return cls(graph)
 
-    def save(self):  # To file
-        raise NotImplementedError
+    @classmethod
+    def create_from_name(cls, name):
+        graph = ox.graph.graph_from_place(name, network_type="walk")
+        return cls(graph)
+
+    def save(self, fpath):  # To file
+        ox.io.save_graphml(self.G, filepath=fpath)
 
 
 class MultiNetwork(TransitNetwork):
@@ -141,6 +159,10 @@ class MultiNetwork(TransitNetwork):
 
     def __init__(self, graph):
         super().__init__(graph)
+
+    @classmethod
+    def create_from_gtfs(cls, gtfs_feed_zip):
+        raise RuntimeError("Needs a walk network!")
 
     @classmethod
     def combine(cls, walk: WalkNetwork, transit: TransitNetwork):
