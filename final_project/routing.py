@@ -1,3 +1,10 @@
+"""routing.py
+
+Home of the RoutingMixin. Provides utilities for routing, finding a graph's nearest nodes,
+and shortests paths between them.
+
+"""
+
 from osmnx import projection, utils_graph, distance
 import numpy
 from pyproj import CRS
@@ -14,48 +21,35 @@ except ImportError:
 
 
 class RoutingMixin:
+    """
+    RoutingMixin to be used by Network class for additional Routing functionality:
+    class Network(RoutingMixin). Thus references to self are references to a Network.
+    
+    """
+
     EARTH_RADIUS_M = 6_371_009
-
-    def get_shortest_route(self, A, B, k=1):
-        """
-
-        :param A:
-        :type A:
-        :param B:
-        :type B:
-        :param k: number of nearest nodes to each A and B to consider
-        :type k:
-        :return:
-        :rtype:
-        """
-        pass
 
     def nearest_k_nodes(self, X, Y, k=1, return_dist=False):
         """
-        Find the nearest node(s) to some point(s).
-        If the graph is projected, this uses a k-d tree for euclidean nearest
-        neighbor search, which requires that scipy is installed as an optional
-        dependency. If it is unprojected, this uses a ball tree for haversine
-        nearest neighbor search, which requires that scikit-learn is installed as
-        an optional dependency.
-        Parameters
-        ----------
-        self : final_project.network
-            Network in which to find nearest nodes
-        X : float or numpy.array
-            points' x or longitude coordinates, in same CRS/units as graph and
+        based on osmnx.distance.nearest_nodes, but modified to work for k-nearest nodes
+
+        Find the k nearest node(s) to some point(s) based on a Graph (self)
+
+        Args:
+            self (final_project.network): Network in which to find nearest nodes
+            X (float or numpy.array): points' x or longitude coordinates, in same CRS/units as graph and
             containing no nulls
-        Y : float or numpy.array
-            points' y or latitude coordinates, in same CRS/units as graph and
+            Y (float or numpy.array): points' y or latitude coordinates, in same CRS/units as graph and
             containing no nulls
-        return_dist : bool
-            optionally also return distance between points and nearest nodes
-        Returns
-        -------
-        nn or (nn, dist)
+            k (int): number of nearest nodes to return
+            return_dist (bool): optionally also return distance between points and nearest nodes
+
+        Returns:
+            nn or (nn, dist)
             nearest node IDs or optionally a tuple where `dist` contains distances
             between the points and their nearest nodes
         """
+
         is_scalar = False
         if not (hasattr(X, "__iter__") and hasattr(Y, "__iter__")):
             # make coordinates arrays if user passed non-iterable values
@@ -103,6 +97,15 @@ class RoutingMixin:
             return nn
 
     def get_route_length(self, route):
+        """
+        Uses a Network's graph to find details about a route
+
+        Args:
+            route (List[int or str]): List of node id's representing a route
+
+        Returns:
+            length (float)
+        """
         length = 0
         first_node = route[0]
         for node in route[1:]:
@@ -111,6 +114,16 @@ class RoutingMixin:
         return length
 
     def get_shortest_pair(self, origin, dest, k=3):
+        """Find the route that is shortest between the k-nearest neighbors of two points
+
+        Args:
+            origin (tuple(lat, lon)): Starting point. make sure to use (Y, X) coordinates
+            dest (tuple(lat, lon)): Ending point. make sure to use (Y, X) coordinates
+            k (int): number of nearest nodes to try
+
+        Returns:
+
+        """
 
         [nearest_to_a], _ = self.nearest_k_nodes(
             origin[1], origin[0], k=k, return_dist=True
@@ -140,16 +153,5 @@ class RoutingMixin:
 
 
 def is_projected(crs):
-    """
-    Determine if a coordinate reference system is projected or not.
-    This is a convenience wrapper around the pyproj.CRS.is_projected function.
-    Parameters
-    ----------
-    crs : string or pyproj.CRS
-        the coordinate reference system
-    Returns
-    -------
-    projected : bool
-        True if crs is projected, otherwise False
-    """
+    """borrowed from osmnx"""
     return CRS.from_user_input(crs).is_projected
