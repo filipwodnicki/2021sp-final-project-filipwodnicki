@@ -30,7 +30,6 @@ On the left are these google map directions, on the right are the same multi-mod
 maxdepth: 1
 caption: Documentation Pages
 ---
-Home <index>
 Project demo <Demo>
 Code reference <reference>
 Discussion - Advanced Python Concepts <adv_py>
@@ -38,8 +37,9 @@ Discussion - Advanced Python Concepts <adv_py>
 
 #### Cool features of this documentation
 1. Autodoc  
-2. Markdown-based, rather than .rst
+2. Markdown-based, rather than .rst  
 3. Parsing ipynb notebooks (using myst-nb library)  
+4. Google docstring style via Sphinx Napoleon  
 
 # Transit + OSMnx
 
