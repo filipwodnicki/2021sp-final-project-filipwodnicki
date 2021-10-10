@@ -26,7 +26,7 @@
     "Schedule: [3 Sep 2019](https://transitfeeds.com/p/mpk-sa-w-krakowie/1105/20190903), [2 Sep 2020](https://transitfeeds.com/p/mpk-sa-w-krakowie/1105/20200902), [1 Sep 2021](https://transitfeeds.com/p/mpk-sa-w-krakowie/1105/20210901-10)\n",
     "\n",
     "Methodology:\n",
-<<<<<<< HEAD
+
     "1. Load GTFS data ✅\n",
     "2. Process using Transit + OSMnx ✅   \n",
     "(3. Test and refactor code as needed.) \n",
@@ -2440,7 +2440,7 @@
     "Make linestrings from Origin Points and target points\n",
     "add back to the edges_df\n",
     "```"
-=======
+
     "1. Load GTFS data\n",
     "2. Process using Transit + OSMnx  \n",
     "(3. Test and refactor code as needed.)\n",
@@ -2448,27 +2448,27 @@
     "5. Share\n",
     "----\n",
     "6. Experiment with summary statistics"
->>>>>>> 925de5613d38d20d9dc3446c4ceacda54c18fbd4
+
    ]
   },
   {
    "cell_type": "markdown",
-<<<<<<< HEAD
+
    "id": "467d33f5-4e6e-413e-b676-48fcbbff24ff",
    "metadata": {},
    "source": [
     "## Map it"
-=======
+
    "id": "7fe25012-5b54-468a-b4ba-239c58779ef5",
    "metadata": {},
    "source": [
     "## Setup"
->>>>>>> 925de5613d38d20d9dc3446c4ceacda54c18fbd4
+
    ]
   },
   {
    "cell_type": "code",
-<<<<<<< HEAD
+
    "execution_count": 269,
    "id": "83af3f4a-3f00-4ea1-a8fd-6dc2f417ebb1",
    "metadata": {},
@@ -2476,19 +2476,19 @@
    "source": [
     "lines = T.edges_df\n",
     "stops = T.nodes_df"
-=======
+
    "execution_count": 2,
    "id": "72cc5fd1-776a-4223-8e76-5dba1702198b",
    "metadata": {},
    "outputs": [],
    "source": [
     "import os"
->>>>>>> 925de5613d38d20d9dc3446c4ceacda54c18fbd4
+
    ]
   },
   {
    "cell_type": "code",
-<<<<<<< HEAD
+
    "execution_count": 270,
    "id": "5e5a96b7-79d4-4aeb-a8be-de21468b2ed9",
    "metadata": {},
@@ -2522,19 +2522,19 @@
    ],
    "source": [
     "stops.info()"
-=======
+
    "execution_count": 3,
    "id": "36144bd4-f7c2-4d78-9437-48b948cf85d1",
    "metadata": {},
    "outputs": [],
    "source": [
     "os.chdir(os.path.dirname(os.getcwd()))"
->>>>>>> 925de5613d38d20d9dc3446c4ceacda54c18fbd4
+
    ]
   },
   {
    "cell_type": "code",
-<<<<<<< HEAD
+
    "execution_count": 272,
    "id": "a78d10b7-b5dc-466b-8464-4504aa1c4ae0",
    "metadata": {},
@@ -2542,19 +2542,19 @@
    "source": [
     "# Make stops xy into shapely points\n",
     "stops[\"geometry\"] = stops.apply(lambda pt: Point(pt[\"x\"], pt[\"y\"]), axis=1)"
-=======
+
    "execution_count": 5,
    "id": "b0c94074-c315-4bfc-a71d-5f8b1417cf71",
    "metadata": {},
    "outputs": [],
    "source": [
     "from final_project.network import WalkNetwork, TransitNetwork, MultiNetwork"
->>>>>>> 925de5613d38d20d9dc3446c4ceacda54c18fbd4
+
    ]
   },
   {
    "cell_type": "code",
-<<<<<<< HEAD
+
    "execution_count": 273,
    "id": "dadc0880-47cf-4ddf-be52-d5e2c86a9388",
    "metadata": {},
@@ -2573,7 +2573,7 @@
    "source": [
     "# Make point geometries into lines\n",
     "lines[\"geometry\"] = lines.apply(lambda pt: LineString([pt.source_geom, pt.target_geom]), axis=1)"
-=======
+
    "execution_count": 8,
    "id": "5d55fc9d-b6d9-42b2-987e-e05316030e9f",
    "metadata": {},
@@ -2588,12 +2588,12 @@
    "metadata": {},
    "source": [
     "## Load data"
->>>>>>> 925de5613d38d20d9dc3446c4ceacda54c18fbd4
+
    ]
   },
   {
    "cell_type": "code",
-<<<<<<< HEAD
+
    "execution_count": 276,
    "id": "80460fc0-b6e9-485a-a5ca-33e1971581ed",
    "metadata": {},
@@ -2601,19 +2601,19 @@
    "source": [
     "# Drop redundant columns\n",
     "lines = lines.drop([\"source_geom\", \"target_geom\"], axis=1)"
-=======
+
    "execution_count": 9,
    "id": "7a1648e3-e26e-4deb-ae8a-aaa8d7767b1f",
    "metadata": {},
    "outputs": [],
    "source": [
     "T = TransitNetwork.create_from_gtfs(data_2019)"
->>>>>>> 925de5613d38d20d9dc3446c4ceacda54c18fbd4
+
    ]
   },
   {
    "cell_type": "code",
-<<<<<<< HEAD
+
    "execution_count": 277,
    "id": "797a16c8-3296-41f1-ba14-9dc7ca8e5a44",
    "metadata": {},
@@ -2661,7 +2661,7 @@
     "fig, ax = plt.subplots(figsize=(20,11))\n",
     "lines_gdf.plot(ax=ax, column=\"trips_per_hour\", legend=True, cmap='OrRd')\n",
     "ax.set_title(\"Trams per hour, Kraków\", fontsize=20)"
-=======
+
    "execution_count": 10,
    "id": "b11a51b5-714c-494b-aa97-b8f8510a22eb",
    "metadata": {},
@@ -2682,17 +2682,17 @@
    ],
    "source": [
     "T.mapper"
->>>>>>> 925de5613d38d20d9dc3446c4ceacda54c18fbd4
+
    ]
   },
   {
    "cell_type": "code",
    "execution_count": null,
-<<<<<<< HEAD
+
    "id": "71f93806-5857-459d-b53b-d86423d426d2",
-=======
+
    "id": "cd6fb7ab-4924-4b48-a20e-e3966dda55e7",
->>>>>>> 925de5613d38d20d9dc3446c4ceacda54c18fbd4
+
    "metadata": {},
    "outputs": [],
    "source": []
@@ -2715,12 +2715,12 @@
    "nbconvert_exporter": "python",
    "pygments_lexer": "ipython3",
    "version": "3.9.7"
-<<<<<<< HEAD
+
   },
   "toc-autonumbering": true
-=======
+
   }
->>>>>>> 925de5613d38d20d9dc3446c4ceacda54c18fbd4
+
  },
  "nbformat": 4,
  "nbformat_minor": 5
